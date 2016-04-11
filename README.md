@@ -4,7 +4,7 @@
 ```shell
 mkdir build && cd build
 cmake ..
-``
+```
 
 ## Usage
 ```shell
