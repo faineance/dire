@@ -20,10 +20,12 @@ int main() {
     fread(buffer, (size_t) len, 1, fp);
     fclose(fp);
 
-    unsigned  char *mem = mmap(NULL, PAGE_SIZE, PROT_WRITE | PROT_EXEC, MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
+    unsigned char *mem = mmap(NULL, PAGE_SIZE, PROT_WRITE, MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
 
     memcpy(mem, buffer, sizeof(buffer));
 
+    mprotect(mem, PAGE_SIZE, PROT_READ | PROT_EXEC); // hah safety
+    
     int (*func)() = (int (*)()) mem;
 
     printf("%d\n", func());
